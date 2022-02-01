@@ -1,0 +1,129 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
+
+body {
+  /* padding: 100%; */
+  background-color: black;
+  font-family: "Lato", sans-serif;
+}
+:root {
+  --primary-color: aliceblue;
+  --primary-text-color: #a8a8a8;
+  --primary-dark-color: #080808;
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  color: var(--primary-color);
+  word-break: break-all;
+}
+.header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+}
+h1 {
+  color: var(--primary-text-color);
+}
+input {
+  color: var(--primary-dark-color);
+}
+input,
+button {
+  outline: none;
+}
+.fa {
+  margin-left: 5px;
+}
+button {
+  border: none;
+}
+button,
+ul li dl dt,
+.task-title {
+  color: var(--primary-color);
+}
+
+.task-title {
+  margin-top: -2px;
+}
+dt {
+  font-weight: 100;
+}
+
+.container {
+  margin: 5% 5%;
+}
+.category-container,
+.category,
+.category-header,
+.task-header,
+.task-controller {
+  display: flex;
+  /* flex: content; */
+}
+
+.category-container {
+  margin-top: 5%;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.category {
+  flex-wrap: wrap;
+  background-color: var(--primary-dark-color);
+  width: 15em;
+  margin: 1%;
+  padding: 1%;
+  /* border-top: 2px solid turquoise; */
+  border-radius: 10px 10px 0px 0px;
+}
+button {
+  background: transparent;
+  /* color: var(--primary-color); */
+  outline: none !important;
+  box-shadow: none;
+}
+.category-header {
+  flex: 100%;
+  min-height: 1.9rem;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+#category-text {
+  background-color: var(--primary-dark-color);
+  border: none;
+  height: 30px;
+  width: 300px;
+  color: var(--primary-text-color);
+}
+
+#category-text {
+  padding-left: 12px;
+}
+
+.task-container {
+  flex: content;
+}
+
+.task-header {
+  justify-content: space-between;
+  flex: content;
+  border-bottom: var(--primary-text-color) 1px solid;
+}
+
+.task-controller {
+  justify-content: flex-start;
+  align-items: center;
+}
+.subtask-container ul li {
+  list-style: none;
+  margin-left: 10px;
+}
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
