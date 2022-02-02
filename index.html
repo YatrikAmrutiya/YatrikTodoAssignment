@@ -20,9 +20,12 @@
         <header class="header">
             <h1>ToDoer.</h1>
             <div>
-                <input type="text" placeholder="Enter category name" id="category-text" />
+                <input type="text" placeholder="Enter category name" id="category-text"  />
                 <button id="btn-save-category" onclick="addCategory()">&nbsp;<i class="fa fa-plus"></i> &nbsp;
+
                     Add</button>
+                <input type="text" placeholder="Search Category here" id="search-text" oninput="searchList()" />
+
             </div>
         </header>
         <!-- header end -->

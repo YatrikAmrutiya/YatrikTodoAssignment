@@ -56,8 +56,15 @@ function addCategory() {
     }
 }
 
-window.onload = function displayFunction() {
-    CATEGORY_LIST.map((category) => {
+function buildCategoryList(list) {
+
+    var child = categoryContainer.lastElementChild;
+    while (child) {
+        categoryContainer.removeChild(child);
+        child = categoryContainer.lastElementChild;
+    }
+
+    list.map((category) => {
         categoryContainer.innerHTML += `
         
         <div class="category" style="border-top: 2px solid ${category.color};">
@@ -107,7 +114,10 @@ window.onload = function displayFunction() {
         
         `;
     });
+
 }
+
+window.onload = buildCategoryList(CATEGORY_LIST)
 
 function fun() {
     alert("debug fun")
@@ -223,4 +233,23 @@ function getPositions(category, task) {
 
 function saveCategoryList() {
     localStorage.setItem("cat_array", JSON.stringify(CATEGORY_LIST));
+}
+
+//search functionality.
+
+const inputTag = document.getElementById('search-text');
+inputTag.addEventListener('input', searchList)
+
+function searchList(e) {
+    var filteredData = []
+    const searchValue = e.target.value.toLowerCase();
+    // console.log("value" + searchValue)
+    let isAvailable = '';
+    CATEGORY_LIST.map(category => {
+        isAvailable = category.name.toLowerCase().includes(searchValue)
+        isAvailable ? filteredData.push(category) : "";
+    })
+    // console.log(filteredData)
+    buildCategoryList(filteredData)
+
 }

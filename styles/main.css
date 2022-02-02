@@ -92,15 +92,14 @@ button {
   font-weight: 900;
   letter-spacing: 2px;
 }
-#category-text {
+#category-text,
+#search-text {
   background-color: var(--primary-dark-color);
   border: none;
   height: 30px;
   width: 300px;
   color: var(--primary-text-color);
-}
-
-#category-text {
+  margin-left: 10px;
   padding-left: 12px;
 }
 
