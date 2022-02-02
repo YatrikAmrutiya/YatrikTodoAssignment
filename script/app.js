@@ -92,6 +92,7 @@ function buildCategoryList(list) {
             return `
             <div class="task-header" >
                 <div class="task-controller">
+                    <input type="checkbox" onChange="finishTask(\'${category.name}\',${element.task_ID})" ${element.status ? "checked" : null}/>
                     <div class="task-title ${!element.status ? null : "completed"}">${element.task_title} <span id="begin-date" style="color: ${category.color}">[${element.task_begin_date || "Add date"}] </span></div>
                 </div>
                 <div style="display: inherit;">
@@ -235,7 +236,18 @@ function checkFinished(category, task) {
     return allDone
 }
 
+function finishTask(category, task) {
+    let category_pos, task_position;
+    [category_pos, task_position] = getPositions(category, task)
+    CATEGORY_LIST[category_pos].tasks[task_position].status = true;
 
+    CATEGORY_LIST[category_pos].tasks[task_position].subtasks.map(item => {
+        item.subtask_status = true;
+    })
+
+    saveCategoryList();
+    document.location.reload();
+}
 
 function deleteTask(category, task) {
     let category_pos, task_position;
