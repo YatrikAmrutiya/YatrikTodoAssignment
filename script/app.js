@@ -1,3 +1,5 @@
+const formatYMD = date => date.toISOString().slice(0, 10);
+
 var CATEGORY_LIST =
     localStorage.getItem("cat_array") == null
         ? [
@@ -9,7 +11,7 @@ var CATEGORY_LIST =
                         task_ID: Date.now(),
                         task_title: "My first task",
                         status: false,
-                        task_begin_date: Date.now(),
+                        task_begin_date: formatYMD(new Date()),
                         subtasks: [
                             {
                                 subtask_ID: Date.now(),
@@ -295,7 +297,6 @@ function searchList(e) {
     buildCategoryList(filteredData)
 }
 
-const formatYMD = date => date.toISOString().slice(0, 10);
 
 function CheckIfIn2Days(date1, date2) {
     const dateOne = new Date(date1);
