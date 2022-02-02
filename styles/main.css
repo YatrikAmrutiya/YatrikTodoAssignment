@@ -29,6 +29,15 @@ h1 {
 input {
   color: var(--primary-dark-color);
 }
+
+select,
+option {
+  background-color: var(--primary-dark-color);
+  color: var(--primary-color);
+  outline: none;
+  border: none;
+}
+
 input,
 button {
   outline: none;
@@ -72,7 +81,7 @@ dt {
 .category {
   flex-wrap: wrap;
   background-color: var(--primary-dark-color);
-  width: 15em;
+  width: 20em;
   margin: 1%;
   padding: 1%;
   /* border-top: 2px solid turquoise; */
@@ -125,4 +134,23 @@ button {
 .completed {
   text-decoration: line-through;
   opacity: 0.6;
+}
+
+input::-webkit-datetime-edit {
+  display: none;
+}
+
+input[type="date"] {
+  background: transparent;
+  border: none;
+  align-self: center;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+#begin-date {
+  font-weight: 100;
+  font-size: 12px;
 }

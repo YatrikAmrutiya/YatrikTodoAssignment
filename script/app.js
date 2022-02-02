@@ -9,6 +9,7 @@ var CATEGORY_LIST =
                         task_ID: Date.now(),
                         task_title: "My first task",
                         status: false,
+                        task_begin_date: Date.now(),
                         subtasks: [
                             {
                                 subtask_ID: Date.now(),
@@ -44,7 +45,10 @@ function addCategory() {
                     
                     <div>
                     <button  onClick="AddTask(\'${category_name}\')"><i style="color: ${Category_color}" class="fa fa-plus"></i></button>
+                    <button  onClick="editCategoryName(\'${category_name}\')"><i style="color: ${Category_color}" class="fa fa-edit"></i></button>
                     <button  onClick="DeleteCategory(\'${category_name}\')"><i style="color: ${Category_color}" class="fa fa-trash"></i></button>
+
+                    
                     </div>
 
                 </div>
@@ -72,7 +76,9 @@ function buildCategoryList(list) {
             <div style="color: ${category.color}">${category.name}</div>
             <div>
             <button  onClick="AddTask(\'${category.name}\')"><i style="color: ${category.color}" class="fa fa-plus"></i></button>
+            <button  onClick="editCategoryName(\'${category.name}\')"><i style="color: ${category.color}" class="fa fa-edit"></i></button>
             <button  onClick="DeleteCategory(\'${category.name}\')"><i style="color: ${category.color}" class="fa fa-trash"></i></button>
+
             </div>
             
 
@@ -84,13 +90,13 @@ function buildCategoryList(list) {
             return `
             <div class="task-header" >
                 <div class="task-controller">
-                    <div class="task-title">${element.task_title}</div>
+                    <div class="task-title ${!element.status ? null : "completed"}">${element.task_title} <span id="begin-date" style="color: ${category.color}">[${element.task_begin_date || "Add date"}] </span></div>
                 </div>
-                <div>
+                <div style="display: inherit;">
+                <input type="date" onChange="addTaskDate(this,\'${category.name}\',${element.task_ID})"/>
                 <button onClick="addSubTask(\'${category.name}\',${element.task_ID})"><i class="fa fa-plus"></i></button>
                 <button onClick="editTaskName(\'${category.name}\',${element.task_ID})"><i class="fa fa-edit"></i></button>
                 <button onClick="deleteTask(\'${category.name}\',${element.task_ID})"><i class="fa fa-trash"></i></button>
-               
                 </div>
                 
             </div>
@@ -140,13 +146,24 @@ function AddTask(category) {
 
     CATEGORY_LIST[pos].tasks.push({
         task_ID: Date.now(),
-        task_title: name_task,
+        task_title: name_task || "No name",
+        task_begin_date: "",
         status: false,
         subtasks: []
     })
 
     saveCategoryList();
     document.location.reload();
+}
+
+function addTaskDate(Entereddate, category, task) {
+    let category_pos, task_position;
+    [category_pos, task_position] = getPositions(category, task);
+    CATEGORY_LIST[category_pos].tasks[task_position].task_begin_date = Entereddate.value
+    saveCategoryList();
+    document.location.reload();
+
+
 }
 
 function DeleteCategory(category) {
@@ -170,6 +187,14 @@ function addSubTask(category, task) {
         subtask_status: false,
         subtask_text: name_sub_task || "No name",
     })
+
+    if (checkFinished(category, task)) {
+        let category_pos, task_position;
+        [category_pos, task_position] = getPositions(category, task)
+        CATEGORY_LIST[category_pos].tasks[task_position].status = true;
+    } else {
+        CATEGORY_LIST[category_pos].tasks[task_position].status = false;
+    }
     saveCategoryList();
     document.location.reload();
 }
@@ -187,10 +212,17 @@ function toggleCompleted(category, task, subtask_id) {
     saveCategoryList();
 
     if (checkFinished(category, task)) {
-        deleteTask(category, task)
+        let category_pos, task_position;
+        [category_pos, task_position] = getPositions(category, task)
+        CATEGORY_LIST[category_pos].tasks[task_position].status = true;
+    } else {
+        CATEGORY_LIST[category_pos].tasks[task_position].status = false;
     }
+    saveCategoryList();
     document.location.reload();
 }
+
+
 
 function checkFinished(category, task) {
     let category_pos, task_position;
@@ -213,13 +245,22 @@ function deleteTask(category, task) {
 }
 
 function editTaskName(category, task) {
-    let new_task_name = prompt("Enter new name");
     let category_pos, task_position;
     [category_pos, task_position] = getPositions(category, task)
+    let current_title = CATEGORY_LIST[category_pos].tasks[task_position].task_title
+    let new_task_name = prompt("Enter new name", current_title);
     CATEGORY_LIST[category_pos].tasks[task_position].task_title = new_task_name || CATEGORY_LIST[category_pos].tasks[task_position].task_title;
     saveCategoryList();
     document.location.reload();
+}
 
+function editCategoryName(category) {
+    let pos = CATEGORY_LIST.map(function (e) { return e.name; }).indexOf(category);
+    let current_category_name = CATEGORY_LIST[pos].name;
+    let new_category_name = prompt("Enter new name", current_category_name);
+    CATEGORY_LIST[pos].name = new_category_name || CATEGORY_LIST[pos].name;
+    saveCategoryList();
+    document.location.reload();
 }
 
 function getPositions(category, task) {
@@ -241,15 +282,61 @@ const inputTag = document.getElementById('search-text');
 inputTag.addEventListener('input', searchList)
 
 function searchList(e) {
-    var filteredData = []
+    console.log("call again")
+    let filteredData = []
     const searchValue = e.target.value.toLowerCase();
-    // console.log("value" + searchValue)
     let isAvailable = '';
     CATEGORY_LIST.map(category => {
-        isAvailable = category.name.toLowerCase().includes(searchValue)
-        isAvailable ? filteredData.push(category) : "";
+        category.tasks.map(task => {
+            isAvailable = task.task_title.toLowerCase().includes(searchValue)
+            isAvailable ? !filteredData.includes(category) ? filteredData.push(category) : "" : "";
+        })
     })
-    // console.log(filteredData)
     buildCategoryList(filteredData)
+}
+
+const formatYMD = date => date.toISOString().slice(0, 10);
+
+function CheckIfIn2Days(date1, date2) {
+    const dateOne = new Date(date1);
+    const dateTwo = new Date(date2);
+    const diffInMs = Math.abs(dateTwo - dateOne);
+    return (diffInMs / (1000 * 60 * 60 * 24)) <= 2;
+}
+
+
+//filter functionality
+const filterTag = document.getElementById('filter');
+filterTag.addEventListener('change', filterList)
+function filterList(e) {
+
+    let filter_option = e.target.value;
+    let today = formatYMD(new Date());
+    let filteredData = []
+    let isToday = ""
+    let isTwoDaysFromNow = ""
+    switch (filter_option) {
+        case "today":
+            CATEGORY_LIST.map(category => {
+                category.tasks.map(task => {
+                    isToday = task.task_begin_date == today;
+                    isToday ? !filteredData.includes(category) ? filteredData.push(category) : "" : "";
+                })
+            })
+            buildCategoryList(filteredData)
+            break;
+        case "upcoming":
+            CATEGORY_LIST.map(category => {
+                category.tasks.map(task => {
+                    isTwoDaysFromNow = CheckIfIn2Days(task.task_begin_date, today);
+                    isTwoDaysFromNow ? !filteredData.includes(category) ? filteredData.push(category) : "" : "";
+                })
+            })
+            buildCategoryList(filteredData)
+            break;
+        default:
+            buildCategoryList(CATEGORY_LIST)
+            break;
+    }
 
 }
