@@ -304,7 +304,17 @@ function CheckIfIn2Days(date1, date2) {
     return (diffInMs / (1000 * 60 * 60 * 24)) <= 2;
 }
 
+function allTasksDone() {
+    let filteredData = []
+    let allDone = CATEGORY_LIST.map((e) => {
+        let allTaskDone = e.tasks.map((item) => {
+            return item.status;
+        }).every(v => v === true);
 
+        allTaskDone ? filteredData.push(e) : ""
+    })
+    return filteredData
+}
 //filter functionality
 const filterTag = document.getElementById('filter');
 filterTag.addEventListener('change', filterList)
@@ -333,6 +343,9 @@ function filterList(e) {
                 })
             })
             buildCategoryList(filteredData)
+            break;
+        case "completed":
+            buildCategoryList(allTasksDone())
             break;
         default:
             buildCategoryList(CATEGORY_LIST)

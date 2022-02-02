@@ -81,7 +81,7 @@ dt {
 .category {
   flex-wrap: wrap;
   background-color: var(--primary-dark-color);
-  width: 20em;
+  width: 19em;
   margin: 1%;
   padding: 1%;
   /* border-top: 2px solid turquoise; */
