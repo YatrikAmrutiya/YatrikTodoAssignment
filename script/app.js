@@ -36,15 +36,15 @@ function addCategory() {
                 color: Category_color,
                 tasks: []
             });
-            localStorage.setItem("cat_array", JSON.stringify(CATEGORY_LIST));
+            saveCategoryList();
             categoryContainer.innerHTML += `
                 <div class="category" style="border-top: 2px solid ${Category_color};">
                 <div class="category-header">
                     <div style="color: ${Category_color}">${category_name}</div>
                     
                     <div>
-                    <button  onClick="AddTask(\'${category.name}\')"><i style="color: ${category.color}" class="fa fa-plus"></i></button>
-                    <button  onClick="DeleteCategory(\'${category.name}\')"><i style="color: ${category.color}" class="fa fa-trash"></i></button>
+                    <button  onClick="AddTask(\'${category_name}\')"><i style="color: ${Category_color}" class="fa fa-plus"></i></button>
+                    <button  onClick="DeleteCategory(\'${category_name}\')"><i style="color: ${Category_color}" class="fa fa-trash"></i></button>
                     </div>
 
                 </div>
