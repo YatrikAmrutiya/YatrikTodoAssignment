@@ -143,8 +143,10 @@ function DeleteCategory(category) {
     let pos = CATEGORY_LIST.map(function (e) { return e.name; }).indexOf(category);
     let text = "This will delete category!\nPress OK to continue.";
     if (confirm(text) == true) {
-        CATEGORY_LIST[pos].splice(pos, 1);
+        CATEGORY_LIST.splice(pos, 1);
     }
+    saveCategoryList();
+    document.location.reload();
 }
 
 function addSubTask(category, task) {
