@@ -156,7 +156,7 @@ function AddTask(category) {
     })
 
     saveCategoryList();
-    document.location.reload();
+    buildCategoryList(CATEGORY_LIST)
 }
 
 function addTaskDate(Entereddate, category, task) {
@@ -164,7 +164,7 @@ function addTaskDate(Entereddate, category, task) {
     [category_pos, task_position] = getPositions(category, task);
     CATEGORY_LIST[category_pos].tasks[task_position].task_begin_date = Entereddate.value
     saveCategoryList();
-    document.location.reload();
+    buildCategoryList(CATEGORY_LIST)
 
 
 }
@@ -176,7 +176,7 @@ function DeleteCategory(category) {
         CATEGORY_LIST.splice(pos, 1);
     }
     saveCategoryList();
-    document.location.reload();
+    buildCategoryList(CATEGORY_LIST)
 }
 
 function addSubTask(category, task) {
@@ -199,7 +199,7 @@ function addSubTask(category, task) {
         CATEGORY_LIST[category_pos].tasks[task_position].status = false;
     }
     saveCategoryList();
-    document.location.reload();
+    buildCategoryList(CATEGORY_LIST)
 }
 
 function toggleCompleted(category, task, subtask_id) {
@@ -222,7 +222,7 @@ function toggleCompleted(category, task, subtask_id) {
         CATEGORY_LIST[category_pos].tasks[task_position].status = false;
     }
     saveCategoryList();
-    document.location.reload();
+    buildCategoryList(CATEGORY_LIST)
 }
 
 
@@ -246,7 +246,7 @@ function finishTask(category, task) {
     })
 
     saveCategoryList();
-    document.location.reload();
+    buildCategoryList(CATEGORY_LIST)
 }
 
 function deleteTask(category, task) {
@@ -254,7 +254,7 @@ function deleteTask(category, task) {
     [category_pos, task_position] = getPositions(category, task)
     CATEGORY_LIST[category_pos].tasks.splice(task_position, 1);
     saveCategoryList();
-    document.location.reload();
+    buildCategoryList(CATEGORY_LIST)
 
 }
 
@@ -265,7 +265,7 @@ function editTaskName(category, task) {
     let new_task_name = prompt("Enter new name", current_title);
     CATEGORY_LIST[category_pos].tasks[task_position].task_title = new_task_name || CATEGORY_LIST[category_pos].tasks[task_position].task_title;
     saveCategoryList();
-    document.location.reload();
+    buildCategoryList(CATEGORY_LIST)
 }
 
 function editCategoryName(category) {
@@ -274,7 +274,7 @@ function editCategoryName(category) {
     let new_category_name = prompt("Enter new name", current_category_name);
     CATEGORY_LIST[pos].name = new_category_name || CATEGORY_LIST[pos].name;
     saveCategoryList();
-    document.location.reload();
+    buildCategoryList(CATEGORY_LIST)
 }
 
 function getPositions(category, task) {
@@ -288,6 +288,7 @@ function getPositions(category, task) {
 
 function saveCategoryList() {
     localStorage.setItem("cat_array", JSON.stringify(CATEGORY_LIST));
+    CATEGORY_LIST = JSON.parse(localStorage.getItem("cat_array"));
 }
 
 //search functionality.
