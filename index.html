@@ -1,51 +1,43 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ToDo App</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./styles/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-        integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
-        crossorigin="anonymous" />
+  <title>Registration and Login</title>
+  <style>
+    /* Add your CSS styling here */
+  </style>
 </head>
-
 <body>
-    <!-- container start -->
-    <div class="container">
-        <!-- header start -->
-        <header class="header">
-            <h1>ToDoer.</h1>
-            <div id="header-control">
-                <input type="text" placeholder="Enter category name" id="category-text" />
-                <button id="btn-save-category" onclick="addCategory()">&nbsp;<i class="fa fa-plus"></i>
-                    &nbsp;Add</button>
-                <input type="text" placeholder="Search Task here" id="search-text" oninput="searchList()" />
-                <select id="filter">
-                    <option value="filter"> default filter
-                    </option>
-                    <option value="today"> Today
-                    </option>
-                    <option value="upcoming"> Upcoming
-                    </option>
-                    <option value="completed"> completed
-                    </option>
-                </select>
-            </div>
-        </header>
-        <!-- header end -->
+  <div id="registrationForm">
+    <h2>Registration</h2>
+    <form id="registerForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required><br>
 
-        <!-- category start -->
-        <div class="category-container">
-            <!-- Appending Categories section here -->
-        </div>
-    </div>
-    <!-- category end -->
-    <script src="./script/app.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <label for="email">Email:</label>
+      <input type="email" id="email" required><br>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" required><br>
+
+      <button type="submit">Register</button>
+    </form>
+    <p id="registrationResult"></p>
+  </div>
+
+  <div id="loginForm">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label for="loginEmail">Email:</label>
+      <input type="email" id="loginEmail" required><br>
+
+      <label for="loginPassword">Password:</label>
+      <input type="password" id="loginPassword" required><br>
+
+      <button type="submit">Login</button>
+    </form>
+    <p id="loginResult"></p>
+  </div>
+
+  <script src="script.js"></script>
 </body>
-
 </html>
