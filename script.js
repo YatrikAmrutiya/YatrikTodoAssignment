@@ -23,8 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "POST",
         mode: "cors",
         headers: {
-          "Content-Type": "application/json",
-          "x-api-key": apiKey,
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           name,
