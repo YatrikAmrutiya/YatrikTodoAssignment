@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // const apiBaseUrl =
   //   "https://qjshit20kd.execute-api.us-east-1.amazonaws.com/prod";
 
-    const apiBaseUrl =process.env.API_GATEWAY_URL;
-  console.log("Here is the url: "+process.env.API_GATEWAY_URL);
+    const apiBaseUrl =
+    "https://qjshit20kd.execute-api.us-east-1.amazonaws.com/prod";
   // Registration form submission handler
   const registerForm = document.getElementById("registerForm");
   const registrationResult = document.getElementById("registrationResult");
