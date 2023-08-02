@@ -1,10 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   // API Gateway URL (replace with your actual API Gateway endpoint URL)
-  // const apiBaseUrl =
-  //   "https://qjshit20kd.execute-api.us-east-1.amazonaws.com/prod";
-
-    const apiBaseUrl =
+  const apiBaseUrl =
     "https://qjshit20kd.execute-api.us-east-1.amazonaws.com/prod";
+
   // Registration form submission handler
   const registerForm = document.getElementById("registerForm");
   const registrationResult = document.getElementById("registrationResult");
@@ -23,7 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "POST",
         mode: "cors",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
         },
         body: JSON.stringify({
           name,
